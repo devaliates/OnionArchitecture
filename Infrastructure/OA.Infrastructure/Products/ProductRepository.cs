@@ -17,6 +17,7 @@ public class ProductRepository
 
     public async Task Add(Product product)
     {
+        product.Id = Guid.NewGuid();
         this.products.Add(product);
         await Task.CompletedTask;
     }

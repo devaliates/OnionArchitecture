@@ -7,7 +7,7 @@ public class BaseEntity
 
     public BaseEntity()
     {
-        this.Id = Guid.NewGuid();
+        this.Id = Guid.Empty;
         this.IsDelete = false;
     }
 }
