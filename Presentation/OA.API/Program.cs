@@ -7,8 +7,10 @@ using OA.Infrastructure.Attributes;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+    .AddFluentValidation(configuration => configuration
+        .RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>())
+    .ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,11 +18,6 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddApplicationServices()
     .AddInfrastructureServices();
-
-builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
-            .AddFluentValidation(configuration => configuration
-                .RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>())
-            .ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 

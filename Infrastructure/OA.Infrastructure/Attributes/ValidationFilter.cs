@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace OA.Infrastructure.Attributes;
 
-public class ValidationFilter : IAsyncActionFilter
+public class ValidationFilter
+    : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
