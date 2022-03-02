@@ -12,10 +12,15 @@ public class Startup
     {
         var createRequest = new CreateProductCommandRequest()
         {
-            Name = "Yeni bir şey",
+            Name = "",
         };
 
+        var validationResult = new CreateProductCommandValidator().Validate(createRequest);
+
+        ValidatorExecuter.HasError(validationResult);
+
         var createResponse = mediators.Send(createRequest).Result;
+
 
         var getAllRequest = new GetAllProductQueryRequest();
         var liste = mediators.Send(getAllRequest).Result;

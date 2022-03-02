@@ -16,3 +16,5 @@ services
 var serviceProvider = services.BuildServiceProvider();
 
 serviceProvider.GetService<Startup>();
+
+Console.Read();
