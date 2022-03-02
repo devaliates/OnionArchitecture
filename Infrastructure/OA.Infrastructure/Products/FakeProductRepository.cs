@@ -2,7 +2,7 @@
 
 namespace OA.Infrastructure.Products;
 
-public class ProductRepository
+public class FakeProductRepository
     : IProductRepository
 {
     private List<Product> products

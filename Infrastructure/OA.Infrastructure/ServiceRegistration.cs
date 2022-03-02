@@ -10,7 +10,7 @@ public static class ServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services
-            .AddSingleton<IProductRepository, ProductRepository>();
+            .AddSingleton<IProductRepository, FakeProductRepository>();
 
         return services;
     }

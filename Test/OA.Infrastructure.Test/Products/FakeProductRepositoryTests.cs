@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace OA.Infrastructure.Test.Products;
 
-public class ProductRepositoryTests
+public class FakeProductRepositoryTests
 {
-    private ProductRepository productRepository;
+    private FakeProductRepository productRepository;
 
-    public ProductRepositoryTests()
-        => this.productRepository = new ProductRepository();
+    public FakeProductRepositoryTests()
+        => this.productRepository = new FakeProductRepository();
 
     [SetUp]
     public void Setup()
-        => this.productRepository = new ProductRepository();
+        => this.productRepository = new FakeProductRepository();
 
     [TestCase]
     public void GetAll()
