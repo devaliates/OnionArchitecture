@@ -3,6 +3,7 @@ using OA.Application.Products.CQRS.Queries.GetAllProduct;
 using System.Threading;
 using System.Linq;
 using OA.Application.Test.TestTools;
+using System.Threading.Tasks;
 
 namespace OA.Application.Test.Products.CQRS.Queries;
 
@@ -19,16 +20,16 @@ public class GetAllProductQueryTests
     }
 
     [SetUp]
-    public void SetUp()
+    public async Task SetUp()
         => this.getAllProductQueryHandler
             = new GetAllProductQueryHandler(
                 new TestProductRepository(),
                 TestMapperTool.Mapper);
 
     [TestCase]
-    public void GetAllProductQueryHandler()
+    public async Task GetAllProductQueryHandler()
     {
-        var list = this.getAllProductQueryHandler.Handle(new GetAllProductQueryRequest(), new CancellationToken()).Result;
+        var list = await this.getAllProductQueryHandler.Handle(new GetAllProductQueryRequest(), new CancellationToken());
 
         Assert.NotZero(list.Count());
     }

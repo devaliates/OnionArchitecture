@@ -17,11 +17,16 @@ public class FakeProductRepository
 
     public async Task Add(Product product)
     {
+        if (product == null)
+            throw await Task.FromException<ArgumentNullException>(new ArgumentNullException());
+
         product.Id = Guid.NewGuid();
         this.products.Add(product);
         await Task.CompletedTask;
     }
 
     public async Task<IEnumerable<Product>> GetAll()
-        => await Task.FromResult(this.products);
+    {
+        return await Task.FromResult(this.products);
+    }
 }

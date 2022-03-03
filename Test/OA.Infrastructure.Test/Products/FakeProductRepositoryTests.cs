@@ -6,6 +6,7 @@ using OA.Infrastructure.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OA.Infrastructure.Test.Products;
 
@@ -17,22 +18,33 @@ public class FakeProductRepositoryTests
         => this.productRepository = new FakeProductRepository();
 
     [SetUp]
-    public void Setup()
+    public async Task SetUp()
         => this.productRepository = new FakeProductRepository();
 
     [TestCase]
-    public void GetAll()
+    public async Task GetAll()
     {
-        var list = this.productRepository.GetAll().Result;
+        var list = await this.productRepository.GetAll();
 
         Assert.NotNull(list, "Deneme notnull");
         Assert.NotZero(list.Count(), "Deneme zero");
     }
 
     [TestCaseSource(nameof(AddTestCases))]
-    public void Add(Product product)
+    public async Task Add(Product product)
     {
-        this.productRepository.Add(product).Wait();
+        if (product == null)
+        {
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async ()
+                    => await this.productRepository.Add(product));
+#pragma warning restore CS8604 // Possible null reference argument.
+
+            return;
+        }
+
+        await this.productRepository.Add(product);
 
         Assert.AreNotEqual(Guid.Empty, product.Id);
     }
@@ -40,7 +52,6 @@ public class FakeProductRepositoryTests
     public static IEnumerable<TestCaseData> AddTestCases()
     {
         yield return new TestCaseData(new Product() { Name = "Case 1 Product" });
-        yield return new TestCaseData(new Product() { Name = "Case 2 Product" });
-        yield return new TestCaseData(new Product() { Name = "Case 3 Product" });
+        yield return new TestCaseData(null);
     }
 }
