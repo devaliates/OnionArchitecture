@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace OA.Infrastructure.Test.Products;
 
-public class FakeProductRepositoryTests
+[TestFixture(typeof(FakeProductRepository))]
+[TestFixture(typeof(FailProductRepository))]
+public class ProductRepositoryTests<TProductRepository>
+    where TProductRepository : new()
 {
-    private FakeProductRepository productRepository;
-
-    public FakeProductRepositoryTests()
-        => this.productRepository = new FakeProductRepository();
+    private IProductRepository productRepository;
 
     [SetUp]
-    public async Task SetUp()
-        => this.productRepository = new FakeProductRepository();
+    public void SetUp()
+    {
+        this.productRepository = (IProductRepository)new TProductRepository();
+    }
 
     [TestCase]
     public async Task GetAll()
